@@ -6,113 +6,239 @@
   <title>CF CarBoost</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-  <!-- Header -->
-  <header class="bg-white shadow-md flex justify-between items-center px-10 py-4">
-    <div class="flex items-center gap-3">
-      <img src="cfcarboost_logo_full.png" alt="logo" class="h-10">
-      <h1 class="text-xl font-bold">CF CarBoost</h1>
-    </div>
-    <a href="https://wa.me/32470588717" class="bg-black text-white px-5 py-2 rounded-xl">Boek nu</a>
-  </header>
+<!-- Header -->
+<header class="bg-white shadow-md flex justify-between items-center px-4 py-3">
+  <img src="cfcarboost_logo_full.png" alt="logo" class="h-10">
 
-  <!-- Hero -->
-  <section class="text-center p-20 bg-gradient-to-r from-gray-900 to-gray-600 text-white">
-    <h2 class="text-4xl font-bold mb-4">Premium Car Cleaning aan Huis</h2>
-    <p class="text-lg mb-6">Kwaliteit die je ziet, service die je voelt.</p>
-    <a href="https://wa.me/32470588717" class="bg-green-500 px-8 py-3 rounded-2xl font-semibold">📱 Boek via WhatsApp</a>
-  </section>
+  <a href="https://wa.me/32470588717"
+     class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transition">
+     📱 Boek
+  </a>
+</header>
 
-  <!-- Diensten -->
-  <section class="p-16">
-    <h2 class="text-3xl font-bold text-center mb-12">Onze Formules</h2>
-    <div class="grid md:grid-cols-4 gap-8">
-      <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-        <h3 class="text-xl font-semibold mb-2">Binnen</h3>
-        <p class="text-3xl font-bold mb-4">€20</p>
-        <ul class="text-sm space-y-1">
-          <li>✔ Stofzuigen</li>
-          <li>✔ Dashboard reinigen</li>
-          <li>✔ Ramen binnen</li>
-        </ul>
-      </div>
+<!-- Hero -->
+<section class="text-center px-6 py-16 bg-gradient-to-r from-gray-900 to-gray-600 text-white">
+  <h2 class="text-2xl md:text-4xl font-bold mb-4">Premium Car Cleaning aan Huis</h2>
+  <p class="text-md md:text-lg mb-6">Kwaliteit die je ziet, service die je voelt.</p>
 
-      <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-        <h3 class="text-xl font-semibold mb-2">Buiten</h3>
-        <p class="text-3xl font-bold mb-4">€20</p>
-        <ul class="text-sm space-y-1">
-          <li>✔ Foam wash</li>
-          <li>✔ Velgen</li>
-          <li>✔ Drogen</li>
-        </ul>
-      </div>
+  <div class="flex flex-col gap-3 items-center">
+    <a href="https://wa.me/32470588717"
+       class="bg-green-500 px-6 py-3 rounded-full font-semibold text-lg shadow-lg hover:bg-green-600 hover:scale-105 transition w-full max-w-xs">
+       📱 Boek via WhatsApp
+    </a>
 
-      <div class="bg-black text-white p-8 rounded-2xl shadow-xl text-center scale-105">
-        <h3 class="text-xl font-semibold mb-2">Basic</h3>
-        <p class="text-3xl font-bold mb-4">€30</p>
-        <ul class="text-sm space-y-1">
-          <li>✔ Binnen + buiten</li>
-          <li>✔ Complete reiniging</li>
-          <li>✔ Beste keuze</li>
-        </ul>
-      </div>
+    <a href="#reviewForm"
+       class="bg-white text-black px-6 py-3 rounded-full font-semibold text-lg shadow hover:scale-105 transition w-full max-w-xs">
+       ⭐ Laat review achter
+    </a>
+  </div>
 
-      <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-        <h3 class="text-xl font-semibold mb-2">Premium</h3>
-        <p class="text-3xl font-bold mb-4">€39</p>
-        <ul class="text-sm space-y-1">
-          <li>✔ Extra grondig</li>
-          <li>✔ Banden glans</li>
-          <li>✔ Detail afwerking</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section class="bg-gray-50 p-16">
-    <h2 class="text-3xl font-bold text-center mb-12">Wat klanten zeggen</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white p-6 rounded-2xl shadow">
-        <p class="italic">"Top service, mijn auto zag er nieuw uit!"</p>
-        <p class="mt-4 font-semibold">★★★★★</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl shadow">
-        <p class="italic">"Heel professioneel en snel. Zeker opnieuw!"</p>
-        <p class="mt-4 font-semibold">★★★★★</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl shadow">
-        <p class="italic">"Beste prijs/kwaliteit die ik gevonden heb."</p>
-        <p class="mt-4 font-semibold">★★★★★</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Over ons -->
-  <section class="p-16 text-center">
-    <h2 class="text-3xl font-bold mb-6">Wie zijn wij?</h2>
-    <p class="max-w-3xl mx-auto text-lg leading-relaxed">
-      Wij zijn Lionel, Edouard, Niel, Alec en Sid – vijf jonge ondernemers met een passie voor auto's en kwaliteit.
-      Met CF CarBoost brengen wij een premium car cleaning service rechtstreeks naar jouw deur.
-      
-      In een druk leven is tijd kostbaar. Daarom nemen wij het werk uit handen en zorgen wij ervoor dat jouw auto er altijd perfect uitziet.
-      
-      Wij werken met professioneel materiaal, oog voor detail en streven naar het beste resultaat bij elke reiniging.
+  <!-- Info voor klant -->
+  <div class="mt-6 text-sm bg-white/10 p-4 rounded-xl max-w-md mx-auto">
+    <p class="font-semibold mb-2">📩 Wat moet je sturen?</p>
+    <p>
+      ✔ Welke datum(s) voor jou passen<br>
+      ✔ Welke auto je hebt<br>
+      ✔ Welke formule je wil<br><br>
+      Wij antwoorden zo snel mogelijk!
     </p>
-  </section>
+  </div>
 
-  <!-- Contact -->
-  <section class="bg-black text-white p-16 text-center">
-    <h2 class="text-3xl font-bold mb-6">Boek jouw reiniging</h2>
-    <a href="https://wa.me/32470588717" class="bg-green-500 px-8 py-3 rounded-2xl font-semibold">📱 WhatsApp ons</a>
-    <p class="mt-6">📸 Instagram: @cfcarboost</p>
-  </section>
+  <p class="mt-6 text-sm">
+    📞 <a href="tel:0470588717" class="underline">0470 58 87 17</a>
+  </p>
+</section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white text-center p-4">
-    <p>© 2026 CF CarBoost</p>
-  </footer>
+<!-- Werkuren -->
+<section class="bg-white p-6 text-center shadow">
+  <h3 class="text-xl font-bold mb-3">🕒 Werkuren</h3>
+  <p>
+    Wij werken na de schooluren.<br><br>
+    ✔ Woensdag namiddag<br>
+    ✔ Weekend<br>
+    ✔ Schoolvakanties<br><br>
+    Stuur gerust een bericht om te boeken 📩
+  </p>
+</section>
+
+<!-- Diensten -->
+<section class="p-6 md:p-16">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Onze Formules</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+    <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+      <h3 class="text-lg font-semibold mb-2">Binnen</h3>
+      <p class="text-2xl font-bold mb-3">€20</p>
+      <ul class="text-sm space-y-1 text-gray-600">
+        <li>✔ Stofzuigen</li>
+        <li>✔ Dashboard reinigen</li>
+        <li>✔ Zetels & matten</li>
+        <li>✔ Ramen binnen</li>
+      </ul>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+      <h3 class="text-lg font-semibold mb-2">Buiten</h3>
+      <p class="text-2xl font-bold mb-3">€20</p>
+      <ul class="text-sm space-y-1 text-gray-600">
+        <li>✔ Foam wash</li>
+        <li>✔ Velgen reinigen</li>
+        <li>✔ Drogen</li>
+        <li>✔ Glans afwerking</li>
+      </ul>
+    </div>
+
+    <div class="bg-black text-white p-6 rounded-2xl shadow-xl text-center scale-105">
+      <h3 class="text-lg font-semibold mb-2">Basic</h3>
+      <p class="text-2xl font-bold mb-3">€30</p>
+      <ul class="text-sm space-y-1">
+        <li>✔ Binnen + buiten</li>
+        <li>✔ Volledige reiniging</li>
+        <li>✔ Beste prijs/kwaliteit</li>
+      </ul>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-lg text-center border-2 border-green-500">
+      <h3 class="text-lg font-semibold mb-2">Premium</h3>
+      <p class="text-2xl font-bold mb-3">€39</p>
+      <ul class="text-sm space-y-1 text-gray-600">
+        <li>✔ Extra grondig</li>
+        <li>✔ Banden glans</li>
+        <li>✔ Detail afwerking</li>
+        <li>✔ Beste resultaat</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- Reviews tonen -->
+<section class="p-6 md:p-16 bg-gray-50">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Klanten reviews</h2>
+
+  <div id="reviewsContainer"
+       class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  </div>
+</section>
+
+<!-- Review toevoegen -->
+<section id="reviewForm" class="bg-white p-6 md:p-16">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-6">
+    Laat een review achter
+  </h2>
+
+  <div class="max-w-xl mx-auto bg-gray-100 p-6 rounded-2xl shadow">
+   
+    <input id="name" type="text" placeholder="Jouw naam"
+      class="w-full p-3 mb-3 rounded-lg border">
+
+    <textarea id="review" placeholder="Jouw review..."
+      class="w-full p-3 mb-3 rounded-lg border"></textarea>
+
+    <select id="rating" class="w-full p-3 mb-4 rounded-lg border">
+      <option value="5">★★★★★</option>
+      <option value="4">★★★★</option>
+      <option value="3">★★★</option>
+      <option value="2">★★</option>
+      <option value="1">★</option>
+    </select>
+
+    <button onclick="addReview()"
+      class="w-full bg-green-500 text-white py-3 rounded-full font-semibold hover:bg-green-600 transition hover:scale-105">
+      Review plaatsen
+    </button>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="bg-black text-white p-10 text-center">
+  <h2 class="text-2xl font-bold mb-6">Boek jouw reiniging</h2>
+
+  <p class="mb-4 text-sm opacity-90">
+    Stuur ons een bericht met:<br>
+    ✔ Datum(s)<br>
+    ✔ Type auto<br>
+    ✔ Gewenste formule
+  </p>
+
+  <a href="https://wa.me/32470588717"
+     class="inline-block bg-gradient-to-r from-green-500 to-green-600 px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:scale-105 transition">
+     📱 WhatsApp ons
+  </a>
+
+  <p class="mt-6">📞 <a href="tel:0470588717" class="underline">0470 58 87 17</a></p>
+</section>
+
+<!-- Sticky knoppen mobiel -->
+<div class="fixed bottom-0 left-0 w-full flex md:hidden">
+ 
+  <a href="https://wa.me/32470588717"
+     class="w-1/2 bg-green-500 text-white text-center py-4 font-bold">
+     📱 Boek
+  </a>
+
+  <a href="#reviewForm"
+     class="w-1/2 bg-black text-white text-center py-4 font-bold">
+     ⭐ Review
+  </a>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white text-center p-4">
+  <p>© 2026 CF CarBoost</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+function loadReviews() {
+  const container = document.getElementById("reviewsContainer");
+  container.innerHTML = "";
+
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+
+  reviews.reverse().forEach(r => {
+    const div = document.createElement("div");
+    div.className = "bg-white p-6 rounded-2xl shadow";
+
+    div.innerHTML = `
+      <p class="italic">"${r.text}"</p>
+      <p class="mt-4 font-semibold">${"★".repeat(r.rating)}</p>
+      <p class="text-sm mt-2 text-gray-500">- ${r.name}</p>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function addReview() {
+  const name = document.getElementById("name").value;
+  const text = document.getElementById("review").value;
+  const rating = document.getElementById("rating").value;
+
+  if (!name || !text) {
+    alert("Vul alles in!");
+    return;
+  }
+
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+
+  reviews.push({ name, text, rating });
+
+  localStorage.setItem("reviews", JSON.stringify(reviews));
+
+  document.getElementById("name").value = "";
+  document.getElementById("review").value = "";
+
+  loadReviews();
+}
+
+loadReviews();
+</script>
 
 </body>
 </html>
