@@ -127,14 +127,34 @@
       Wij werken met professioneel materiaal, oog voor detail en streven naar het beste resultaat bij elke reiniging.
     </p>
   </section>
-<!-- Reviews tonen -->
+<!-- Reviews tonen met gemiddelde rating en Meer reviews knop -->
 <section class="p-6 md:p-16 bg-gray-50">
   <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Klanten reviews</h2>
 
-  <div id="reviewsContainer"
-       class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  <!-- Gemiddelde rating balk -->
+  <div id="averageRatingSection" class="max-w-2xl mx-auto text-center mb-8">
+    <div id="averageRatingStars" class="flex justify-center text-yellow-400 text-2xl mb-2"></div>
+
+    <div class="w-full bg-gray-300 rounded-full h-4 mb-2 overflow-hidden">
+      <div id="ratingBar" class="bg-yellow-400 h-4 rounded-full w-0 transition-all duration-700"></div>
+    </div>
+
+    <p id="averageRatingValue" class="text-lg font-semibold"></p>
+    <p id="totalReviews" class="text-sm text-gray-600"></p>
+  </div>
+
+  <!-- Reviews container -->
+  <div id="reviewsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"></div>
+
+  <!-- Meer reviews knop -->
+  <div class="text-center mt-6">
+    <button id="loadMoreBtn"
+      class="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition hidden">
+      Meer reviews tonen
+    </button>
   </div>
 </section>
+
 
 <!-- Review toevoegen -->
 <section id="reviewForm" class="bg-white p-6 md:p-16">
@@ -206,69 +226,120 @@
 
 <!-- SCRIPT -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAfter } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDNogl5lPTjLEFH__kGmYQWCbUmoF5VmT8",
-    authDomain: "cfcarboost.firebaseapp.com",
-    projectId: "cfcarboost",
-    storageBucket: "cfcarboost.firebasestorage.app",
-    messagingSenderId: "943773645390",
-    appId: "1:943773645390:web:d2a38aad3054e5e4dca11f"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDNogl5lPTjLEFH__kGmYQWCbUmoF5VmT8",
+  authDomain: "cfcarboost.firebaseapp.com",
+  projectId: "cfcarboost",
+  storageBucket: "cfcarboost.firebasestorage.app",
+  messagingSenderId: "943773645390",
+  appId: "1:943773645390:web:d2a38aad3054e5e4dca11f"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  async function loadReviews() {
-    const container = document.getElementById("reviewsContainer");
-    container.innerHTML = "";
+let lastVisible = null;
+const pageSize = 5;
 
-    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
+// Laad reviews
+async function loadReviews(initial = true) {
+  const container = document.getElementById("reviewsContainer");
+  if (initial) container.innerHTML = "";
 
-    snapshot.forEach((doc) => {
-      const r = doc.data();
-
-      const div = document.createElement("div");
-      div.className = "bg-white p-6 rounded-2xl shadow";
-
-      div.innerHTML = `
-        <p class="italic">"${r.text}"</p>
-        <p class="mt-4 font-semibold">${"★".repeat(r.rating)}</p>
-        <p class="text-sm mt-2 text-gray-500">- ${r.name}</p>
-      `;
-
-      container.appendChild(div);
-    });
+  let q = query(collection(db, "reviews"), orderBy("createdAt", "desc"), limit(pageSize));
+  if (lastVisible && !initial) {
+    q = query(collection(db, "reviews"), orderBy("createdAt", "desc"), startAfter(lastVisible), limit(pageSize));
   }
 
-  window.addReview = async function () {
-    const name = document.getElementById("name").value;
-    const text = document.getElementById("review").value;
-    const rating = document.getElementById("rating").value;
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) {
+    document.getElementById("loadMoreBtn").style.display = "none";
+    return;
+  }
 
-    if (!name || !text) {
-      alert("Vul alles in!");
-      return;
-    }
+  lastVisible = snapshot.docs[snapshot.docs.length - 1];
 
-    await addDoc(collection(db, "reviews"), {
-      name,
-      text,
-      rating: parseInt(rating),
-      createdAt: new Date()
-    });
+  snapshot.forEach((docItem) => {
+    const r = docItem.data();
+    const div = document.createElement("div");
+    div.className = "bg-white p-6 rounded-2xl shadow";
 
-    document.getElementById("name").value = "";
-    document.getElementById("review").value = "";
+    div.innerHTML = `
+      <p class="italic">"${r.text}"</p>
+      <p class="mt-4 font-semibold">${"★".repeat(r.rating)}</p>
+      <p class="text-sm mt-2 text-gray-500">- ${r.name}</p>
+    `;
+    container.appendChild(div);
+  });
 
-    loadReviews();
-  };
+  // Toon “Meer reviews” knop alleen als er nog meer reviews zijn
+  const totalSnapshot = await getDocs(collection(db, "reviews"));
+  document.getElementById("loadMoreBtn").style.display = totalSnapshot.size > container.childElementCount ? "inline-block" : "none";
 
+  updateAverageAndTotal(totalSnapshot);
+}
+
+// Voeg review toe
+window.addReview = async function () {
+  const name = document.getElementById("name").value;
+  const text = document.getElementById("review").value;
+  const rating = parseInt(document.getElementById("rating").value);
+
+  if (!name || !text) {
+    alert("Vul alles in!");
+    return;
+  }
+
+  await addDoc(collection(db, "reviews"), {
+    name,
+    text,
+    rating,
+    createdAt: new Date()
+  });
+
+  document.getElementById("name").value = "";
+  document.getElementById("review").value = "";
+  
+  lastVisible = null;
   loadReviews();
+};
+
+// Update gemiddelde rating + visuele balk
+function updateAverageAndTotal(snapshot) {
+  const reviews = snapshot.docs.map(d => d.data());
+  const total = reviews.length;
+  const avg = total ? (reviews.reduce((a,b) => a + b.rating, 0) / total) : 0;
+
+  // Sterren visualisatie
+  const starsContainer = document.getElementById("averageRatingStars");
+  starsContainer.innerHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    if (i <= Math.floor(avg)) {
+      starsContainer.innerHTML += '★';
+    } else if (i - avg <= 0.5) {
+      starsContainer.innerHTML += '⯪';
+    } else {
+      starsContainer.innerHTML += '☆';
+    }
+  }
+
+  // Horizontale balk animatie
+  const bar = document.getElementById("ratingBar");
+  bar.style.width = `${(avg / 5) * 100}%`;
+
+  // Cijfer en totaal
+  document.getElementById("averageRatingValue").innerHTML = `Gemiddelde rating: ${avg.toFixed(1)}`;
+  document.getElementById("totalReviews").innerHTML = `Totaal ${total} review${total !== 1 ? "s" : ""}`;
+}
+
+// “Meer reviews” knop
+document.getElementById("loadMoreBtn").addEventListener("click", () => loadReviews(false));
+
+// Start met laden
+loadReviews();
 </script>
 
 </body>
