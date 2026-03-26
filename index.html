@@ -205,50 +205,70 @@
 </footer>
 
 <!-- SCRIPT -->
-<script>
-function loadReviews() {
-  const container = document.getElementById("reviewsContainer");
-  container.innerHTML = "";
+script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const firebaseConfig = {
+    apiKey: "AIzaSyDNogl5lPTjLEFH__kGmYQWCbUmoF5VmT8",
+    authDomain: "cfcarboost.firebaseapp.com",
+    projectId: "cfcarboost",
+    storageBucket: "cfcarboost.firebasestorage.app",
+    messagingSenderId: "943773645390",
+    appId: "1:943773645390:web:d2a38aad3054e5e4dca11f"
+  };
 
-  reviews.reverse().forEach(r => {
-    const div = document.createElement("div");
-    div.className = "bg-white p-6 rounded-2xl shadow";
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    div.innerHTML = `
-      <p class="italic">"${r.text}"</p>
-      <p class="mt-4 font-semibold">${"★".repeat(r.rating)}</p>
-      <p class="text-sm mt-2 text-gray-500">- ${r.name}</p>
-    `;
+  async function loadReviews() {
+    const container = document.getElementById("reviewsContainer");
+    container.innerHTML = "";
 
-    container.appendChild(div);
-  });
-}
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
 
-function addReview() {
-  const name = document.getElementById("name").value;
-  const text = document.getElementById("review").value;
-  const rating = document.getElementById("rating").value;
+    snapshot.forEach((doc) => {
+      const r = doc.data();
 
-  if (!name || !text) {
-    alert("Vul alles in!");
-    return;
+      const div = document.createElement("div");
+      div.className = "bg-white p-6 rounded-2xl shadow";
+
+      div.innerHTML = `
+        <p class="italic">"${r.text}"</p>
+        <p class="mt-4 font-semibold">${"★".repeat(r.rating)}</p>
+        <p class="text-sm mt-2 text-gray-500">- ${r.name}</p>
+      `;
+
+      container.appendChild(div);
+    });
   }
 
-  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  window.addReview = async function () {
+    const name = document.getElementById("name").value;
+    const text = document.getElementById("review").value;
+    const rating = document.getElementById("rating").value;
 
-  reviews.push({ name, text, rating });
+    if (!name || !text) {
+      alert("Vul alles in!");
+      return;
+    }
 
-  localStorage.setItem("reviews", JSON.stringify(reviews));
+    await addDoc(collection(db, "reviews"), {
+      name,
+      text,
+      rating: parseInt(rating),
+      createdAt: new Date()
+    });
 
-  document.getElementById("name").value = "";
-  document.getElementById("review").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("review").value = "";
+
+    loadReviews();
+  };
 
   loadReviews();
-}
-
-loadReviews();
 </script>
 
 </body>
